@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.pytype/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Django
+*.sqlite3
+db.sqlite3
+/media/
+/static/
+/staticfiles/
+local_settings.py
+
+# Coverage / tooling
+.coverage
+.coverage.*
+htmlcov/
+
+# VS Code / IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
