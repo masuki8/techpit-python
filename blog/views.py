@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, DeleteView, UpdateView
+from .models import Blog, Category
 
 def index(request):
     print("Index関数を使ってTOP画面を表示します！")
@@ -12,3 +13,13 @@ class IndexView(TemplateView):
         context = self.get_context_data(**kwargs)
         print("IndexViewを使ってTOP画面を表示します！")
         return self.render_to_response(context)
+
+class BlogListView(ListView):
+    template_name = 'blog/blog_list.html'
+    model = Blog
+    queryset = Blog.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogListView, self).get_context_data(**kwargs)
+        context['category_list'] = Category.objects.all()
+        return context

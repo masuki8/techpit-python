@@ -7,7 +7,7 @@ class Category(models.Model):
         verbose_name_plural = "カテゴリー名"
 
     category_name = models.CharField(verbose_name="カテゴリ名", max_length=100, unique=True)
-    catetory_image = models.ImageField(verbose_name="カテゴリ画像", upload_to="images/")
+    category_image = models.ImageField(verbose_name="カテゴリ画像", upload_to="images/")
 
     def __str__(self):
         return self.category_name
