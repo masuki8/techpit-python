@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from .models import Blog, Category
 from . forms import BlogForm
 from django.urls import reverse_lazy
+from django.db.models import Q # OR条件を作るときに使用
 
 def index(request):
     print("Index関数を使ってTOP画面を表示します！")
@@ -100,3 +101,26 @@ class CategoryView(ListView):
        context = super(CategoryView, self).get_context_data(**kwargs)
        context['category_list'] = Category.objects.all()
        return context
+
+class SearchPostView(ListView):
+    model = Blog
+    template_name = 'blog/blog_list.html'
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q', None)
+       
+        if query is not None:
+            qs = Blog.objects.filter(Q(title__icontains=query) | 
+                 Q(category__category_name__icontains=query))
+            return qs
+
+        else:
+            qs = Blog.objects.all()
+            return qs
+
+
+    def get_context_data(self, *args, **kwargs):
+        #context = super().get_context_data(*args, **kwargs)
+        context = super(SearchPostView, self).get_context_data(**kwargs)
+        context['category_list'] = Category.objects.all()
+        return context
