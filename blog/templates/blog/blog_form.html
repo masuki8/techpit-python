@@ -6,7 +6,11 @@
     <div class="content">
         <div class="main">
             <section class="career">
+                {% if message_type == "create" %}
                 <h1>記事の新規登録</h1>
+                {% elif message_type == "edit" %} 
+                <h1>記事の更新</h1>
+                {% endif %}
                 <form method="POST">
                     <table>
                         {{ form }}
