@@ -4,6 +4,7 @@ from .models import Blog, Category
 from . forms import BlogForm
 from django.urls import reverse_lazy
 from django.db.models import Q # OR条件を作るときに使用
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def index(request):
     print("Index関数を使ってTOP画面を表示します！")
@@ -27,7 +28,7 @@ class BlogListView(ListView):
         context['category_list'] = Category.objects.all()
         return context
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     form_class = BlogForm
     #登録処理が正常終了した場合の遷移先を指定
@@ -55,7 +56,7 @@ class BlogDetailView(DetailView):
        context['category_list'] = Category.objects.all()
        return context
 
-class BlogEditView(UpdateView):
+class BlogEditView(LoginRequiredMixin, UpdateView):
     model = Blog
     form_class = BlogForm
     template_name = 'blog/blog_form.html'
@@ -74,7 +75,7 @@ def edit_done(request):
     return render(request, 'blog/edit_done.html',{
         'category_list': category_list })
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     template_name = 'blog/blog_confirm_delete.html'
     success_url = reverse_lazy('blog:delete_done')
